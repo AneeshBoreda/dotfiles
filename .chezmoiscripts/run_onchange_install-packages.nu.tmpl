@@ -1,0 +1,83 @@
+#!/usr/bin/env nu
+# Packages hash: {{ include ".chezmoidata/packages.toml" | sha256sum }}
+
+let packages = [
+{{ range .packages }}  {{ . | quote }}
+{{ end }}]
+
+let aur_packages = [
+{{ range .aur_packages }}  {{ . | quote }}
+{{ end }}]
+
+def filter_installed [pkgs: list<string>] {
+    let installed = (pacman -Qq | lines)
+    $pkgs | where {|pkg| $pkg not-in $installed }
+}
+
+def install_via_pamac [pkgs: list<string>, aur_pkgs: list<string>] {
+    if ($pkgs | is-not-empty) {
+        print $"Installing official packages with pamac: ($pkgs)"
+        sudo pamac install ...$pkgs
+    }
+    
+    if ($aur_pkgs | is-not-empty) {
+        print $"Installing AUR packages with pamac: ($aur_pkgs)"
+        pamac build ...$aur_pkgs
+    }
+}
+
+def install_via_paru [pkgs: list<string>, aur_pkgs: list<string>] {
+    if ($pkgs | is-not-empty) {
+        print $"Installing packages with paru: ($pkgs)"
+        paru -S --needed ...$pkgs
+    }
+    if ($aur_pkgs | is-not-empty) {
+        print $"Installing AUR packages with paru: ($aur_pkgs)"
+        paru -S --needed ...$aur_pkgs
+    }
+}
+
+def install_via_yay [pkgs: list<string>, aur_pkgs: list<string>] {
+    if ($pkgs | is-not-empty) {
+        print $"Installing packages with yay: ($pkgs)"
+        yay -S --needed ...$pkgs
+    }
+    if ($aur_pkgs | is-not-empty) {
+        print $"Installing AUR packages with yay: ($aur_pkgs)"
+        yay -S --needed ...$aur_pkgs
+    }
+}
+
+def install_via_pacman [pkgs: list<string>, aur_pkgs: list<string>] {
+    if ($pkgs | is-not-empty) {
+        print $"Installing official packages with pacman: ($pkgs)"
+        sudo pacman -S --needed ...$pkgs
+    }
+    
+    if ($aur_pkgs | is-not-empty) {
+        print "WARNING: No AUR helper found. Skipping missing AUR packages:"
+        print $aur_pkgs
+    }
+}
+
+# Main logic
+let missing_packages = (filter_installed $packages)
+let missing_aur_packages = (filter_installed $aur_packages)
+
+if ($missing_packages | is-empty) and ($missing_aur_packages | is-empty) {
+    print "All packages are already installed."
+    exit 0
+}
+
+if (which pamac | is-not-empty) {
+    install_via_pamac $missing_packages $missing_aur_packages
+} else if (which paru | is-not-empty) {
+    install_via_paru $missing_packages $missing_aur_packages
+} else if (which yay | is-not-empty) {
+    install_via_yay $missing_packages $missing_aur_packages
+} else if (which pacman | is-not-empty) {
+    install_via_pacman $missing_packages $missing_aur_packages
+} else {
+    print "No supported package manager found (pamac/paru/yay/pacman)"
+    exit 1
+}

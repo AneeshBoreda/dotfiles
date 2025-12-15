@@ -6,3 +6,7 @@
 .config/nushell/autoload/zoxide.nu
 .config/nushell/autoload/.zoxide-version
 .config/nushell/history.txt
+
+# Repository files
+bootstrap.sh
+README.md

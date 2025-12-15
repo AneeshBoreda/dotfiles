@@ -1,0 +1,13 @@
+# Packages to install on Arch/Manjaro
+packages = [
+    "fd",
+    "ripgrep",
+    "bat",
+    "zoxide",
+    "nushell",
+    "ghostty",
+]
+
+aur_packages = [
+    "neovim-nightly-bin",
+]
