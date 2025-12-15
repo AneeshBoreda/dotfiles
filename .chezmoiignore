@@ -1,3 +1,8 @@
 # Neovim
 .config/nvim/.git
 .config/nvim/lazy-lock.json
+
+# Generated at runtime (see nushell/env.nu)
+.config/nushell/autoload/zoxide.nu
+.config/nushell/autoload/.zoxide-version
+.config/nushell/history.txt

@@ -20,11 +20,8 @@
 # Modular config loaded from ~/.config/nushell/autoload/
 # - env.nu       : Environment variables (EDITOR, PATH, etc.)
 # - chezmoi.nu   : Dotfiles management aliases and functions
-# - shell.nu     : Shell utilities (reload, etc.)
+# - shell.nu     : Shell utilities (reload, cd=z, etc.)
+# - zoxide.nu    : Generated automatically by env.nu
 
-# Initialize zoxide (smart directory jumping)
-# Install: cargo install zoxide
-if (which zoxide | is-not-empty) {
-    zoxide init nushell | save -f ($nu.data-dir | path join "zoxide.nu")
-    source ($nu.data-dir | path join "zoxide.nu")
-}
+# Disable welcome banner (so startup messages are visible)
+$env.config.show_banner = false
