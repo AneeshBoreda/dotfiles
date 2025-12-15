@@ -16,3 +16,5 @@
 #
 # You can remove these comments if you want or leave
 # them for future reference.
+
+# Environment variables are now in autoload/env.nu
