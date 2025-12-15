@@ -1,0 +1,8 @@
+# Chezmoi configuration
+
+[add]
+    exclude = [
+        "**/lazy-lock.json",
+        "**/*.log",
+        "**/.netrwhist",
+    ]
