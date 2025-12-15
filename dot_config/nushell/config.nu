@@ -22,3 +22,9 @@
 # - chezmoi.nu   : Dotfiles management aliases and functions
 # - shell.nu     : Shell utilities (reload, etc.)
 
+# Initialize zoxide (smart directory jumping)
+# Install: cargo install zoxide
+if (which zoxide | is-not-empty) {
+    zoxide init nushell | save -f ($nu.data-dir | path join "zoxide.nu")
+    source ($nu.data-dir | path join "zoxide.nu")
+}

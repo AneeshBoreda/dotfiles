@@ -2,6 +2,11 @@
 
 def reload [] { exec nu }
 
+# Modern CLI replacements (install via: cargo install fd-find ripgrep bat zoxide)
+alias find = fd
+alias grep = rg
+alias cat = bat --paging=never
+
 # Quick path to ~/.config
 def cfg [subpath?: string] {
     let base = ($env.HOME | path join ".config")
