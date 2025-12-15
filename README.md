@@ -2,6 +2,7 @@
 
 ## 🚀 Quick Start (Bootstrap)
 
+```
 sh -c "$(curl -fsLS https://raw.githubusercontent.com/AneeshBoreda/dotfiles/master/bootstrap.sh)"
 ```
 
