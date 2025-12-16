@@ -61,3 +61,38 @@ return {
 - **Leader**: `<Space>`
 - Use `<Space>sk` to search keymaps via Telescope.
 - `which-key` will show available bindings as you type the leader key.
+
+### LSP Keybindings (active when LSP is attached)
+| Keymap | Action |
+|--------|--------|
+| `gd` | Go to definition |
+| `gr` | Find references |
+| `gD` | Go to declaration |
+| `gI` | Go to implementation |
+| `gy` | Go to type definition |
+| `K` | Hover documentation |
+| `gK` | Signature help |
+| `<leader>ca` | Code actions |
+| `<leader>cr` | Rename symbol |
+| `<leader>cf` | Format buffer |
+| `<leader>cd` | Line diagnostics |
+| `]d` / `[d` | Next/prev diagnostic |
+| `]e` / `[e` | Next/prev error |
+| `<leader>uh` | Toggle inlay hints |
+
+**TypeScript** (`lsp/ts.lua`):
+- `<leader>co` - Organize imports
+- `<leader>cR` - Remove unused imports
+
+**Rust** (`lsp/rust.lua`) - requires `rustaceanvim`:
+- `<leader>cC` - Open Cargo.toml
+- `<leader>cR` - Rust runnables
+- `<leader>cD` - Rust debuggables
+- `<leader>cm` - Expand macro
+- `<leader>ce` - Explain error
+- `J` - Join lines
+
+**Python** (`lsp/python.lua`):
+- `<leader>co` - Organize imports
+
+
