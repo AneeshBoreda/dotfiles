@@ -3,7 +3,6 @@
 def reload [] { exec nu }
 
 # Modern CLI replacements (install via: cargo install fd-find ripgrep bat zoxide)
-alias find = fd
 alias grep = rg
 alias cat = bat --paging=never
 
