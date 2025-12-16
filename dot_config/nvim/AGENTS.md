@@ -84,7 +84,7 @@ return {
 - `<leader>co` - Organize imports
 - `<leader>cR` - Remove unused imports
 
-**Rust** (`lsp/rust.lua`) - requires `rustaceanvim`:
+**Rust** (`lsp/rust.lua`) - uses `rustaceanvim` (manages rust-analyzer):
 - `<leader>cC` - Open Cargo.toml
 - `<leader>cR` - Rust runnables
 - `<leader>cD` - Rust debuggables

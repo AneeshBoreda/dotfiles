@@ -12,8 +12,8 @@ require("config.autocmds")
 
 require("lazy").setup({
   spec = {
-    -- import your plugins
     { import = "plugins" },
+    { import = "plugins.lsp" },
   },
   defaults = {
     -- By default, plugins will not be lazy-loaded.
