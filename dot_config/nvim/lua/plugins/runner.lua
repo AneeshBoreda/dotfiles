@@ -40,6 +40,18 @@ function M.detect_project()
   return nil
 end
 
+-- Shared float options (same as terminal.lua)
+local float_opts = {
+  win = {
+    position = "float",
+    backdrop = 60,
+    height = 0.9,
+    width = 0.9,
+    zindex = 50,
+    border = "rounded",
+  },
+}
+
 -- Execute a project command
 function M.exec(cmd_type)
   local project = M.detect_project()
@@ -54,9 +66,32 @@ function M.exec(cmd_type)
     return
   end
 
-  -- Run command from project directory
-  local full_cmd = "cd " .. vim.fn.shellescape(project.dir) .. " && " .. cmd
-  Snacks.terminal(full_cmd)
+  -- Build the full command to run from project directory
+  local full_cmd = "cd " .. vim.fn.shellescape(project.dir) .. " ; " .. cmd
+
+  -- Get or create the shared floating terminal (same one used by <c-/>)
+  local term = Snacks.terminal.get(nil, float_opts)
+  
+  -- Ensure terminal is visible
+  if not term or not term:buf_valid() then
+    -- Open a fresh terminal if none exists
+    Snacks.terminal.toggle(nil, float_opts)
+    term = Snacks.terminal.get(nil, float_opts)
+  elseif not term:win_valid() then
+    -- Show the terminal if hidden
+    Snacks.terminal.toggle(nil, float_opts)
+  end
+
+  -- Send the command to the terminal
+  if term and term:buf_valid() then
+    vim.defer_fn(function()
+      -- Send the command followed by Enter
+      local chan = vim.bo[term.buf].channel
+      if chan then
+        vim.api.nvim_chan_send(chan, full_cmd .. "\n")
+      end
+    end, 100) -- Small delay to ensure terminal is ready
+  end
 end
 
 return {
